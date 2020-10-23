@@ -1,0 +1,17 @@
+language: go
+
+go:
+  - "1.14.x"
+
+services:
+  - docker
+
+before_install:
+  - go mod download
+
+script:
+  - docker run --rm -v $(pwd):/app -w /app golangci/golangci-lint:v1.23.8 golangci-lint run -v
+  - make ci-test
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
