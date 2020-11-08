@@ -35,6 +35,7 @@ func grep(reader io.Reader, input string, v bool, i bool) {
 
 		if i {
 			input = strings.ToLower(input)
+			line = strings.ToLower(line)
 		}
 
 		if !v {
