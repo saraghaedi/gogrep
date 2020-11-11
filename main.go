@@ -30,12 +30,17 @@ func grepFile(fileAddress, input string, v bool, i bool, g bool) {
 
 func grep(reader io.Reader, input string, v bool, i bool, g bool) {
 	scanner := bufio.NewScanner(reader)
+	rgx := regexp.MustCompile(input)
 
 	for scanner.Scan() {
 		line := scanner.Text()
 
+		if i {
+			input = strings.ToLower(input)
+			line = strings.ToLower(line)
+		}
+
 		if g {
-			rgx := regexp.MustCompile(input)
 			match := rgx.MatchString(line)
 
 			if match && !v {
@@ -43,14 +48,7 @@ func grep(reader io.Reader, input string, v bool, i bool, g bool) {
 			} else if !match && v {
 				fmt.Println(line)
 			}
-		}
-
-		if i {
-			input = strings.ToLower(input)
-			line = strings.ToLower(line)
-		}
-
-		if !g {
+		} else {
 			if !v {
 				if strings.Contains(line, input) {
 					fmt.Println(line)
