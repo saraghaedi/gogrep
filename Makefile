@@ -35,13 +35,3 @@ check-linter:
 lint: check-linter
 	golangci-lint run $(ROOT)/...
 
-############################################################
-# Test
-############################################################
-
-test:
-	go test -v -race -p 1 ./...
-
-ci-test:
-	go test -v -race -p 1 -coverprofile=coverage.txt -covermode=atomic ./...
-	go tool cover -func coverage.txt
